@@ -1,0 +1,49 @@
+1.db.assignment2.aggregate([
+      {$group:{"_id":null,
+      averageTemp:{$avg:"$airTemperature.value"}}
+      }])
+
+2.db.assignment2.aggregate([{$group:{_id:"$wind.type",MaxSpeed:{$max:"$wind.speed.rate"}}}])
+
+3.db.assignment2.aggregate([{$group:{"_id":null,
+  Totaldepth:{$sum:"$precipitationEstimatedObservation.estimatedWaterDepth"}}
+  }])
+
+4.db.assignment2.aggregate([{ $match:{"waveMeasurement":{$exists:true}}},
+                           {$group:{"_id":"$waveMeasurement.seaState.code","count":{$sum:1}}},
+                          {$sort:{"count":-1}},
+                          {$limit:1}
+                          
+])
+
+5.db.assignment2.aggregate([
+                           {$group:{"_id":{$month:"$ts"},"avgAirTemperature":{$avg:"$airTemperature.value"},"avgDewPoint":{$avg:"$dewPoint.value"}}},
+                    
+])
+
+6.db.assignment2.aggregate([{$group:{_id:"$skyCondition.ceilingHeight.value",avgElevation:{$avg:"$elevation"},maxSpeed:{$max:"$wind.speed.rate"}}}]).toArray()
+
+7.db.assignment2.aggregate([{$count:"TotalDocumentsCount"}])
+
+8.db.assignment2.aggregate([{$match:{"airTemperature.value":{$gt:25},"visibility.distance.value":{$gt:1000}}},{$project:{"airTemperature.value":1,"visibility.distance.value":1}}])
+
+
+9.db.assignment2.aggregate([{$match:{"visibility.distance.value":{$gt:1000}}},{$count:"TotalDocuments"}])
+
+10.db.assignment2.aggregate([{$match:{"precipitationEstimatedObservation.discrepancy":"2"}},{$count:"TotalDocuments"}])
+
+11.db.assignment2.aggregate([{$match:{"skyCondition.ceilingHeight.quality":"9"}},{$project:{"skyCondition.ceilingHeight.quality":1}}])
+
+12.db.assignment2.aggregate([{$match:{"airTemperature.quality":"1","dewPoint.quality":"1"}}])
+
+13.db.assignment2.aggregate([{$match:{$or:[{"waveMeasurement.seaState.code":"99"},{"visibility.distance.value":{$gt:5000}}]}}])
+
+14.db.assignment2.distinct("sections")   // db.assignment2.aggregate([{$unwind:"$sections"},{$group:{_id:"$sections"}},{$project:{"Unique":"$_id",_id:0}}]).toArray()
+
+15.db.assignment2.aggregate([{$group:{_id:{st:"$st",dataSource:"$dataSource"}}}])
+
+16.db.assignment2.aggregate([{$match:{"airTemperature.quality":"1"}},{$group:{_id:"$ts"}}])
+
+17.
+
+18.
